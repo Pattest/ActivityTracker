@@ -7,15 +7,39 @@
 
 import SwiftUI
 
-struct ActivityItem: Identifiable, Codable {
+class ActivityItem: ObservableObject, Codable {
     var id = UUID()
     var name: String
     var description: String
-    var count: Int
+    @Published var count: Int = 0
 
     init(name: String, description: String) {
         self.name = name
         self.description = description
-        self.count = 0
     }
+
+    // MARK: - Codable
+
+    private enum CodingKeys: String, CodingKey {
+        case name
+        case description
+        case count
+    }
+
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        name = try container.decode(String.self, forKey: .name)
+        description = try container.decode(String.self, forKey: .description)
+        count = try container.decode(Int.self, forKey: .count)
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+
+        try container.encode(name, forKey: .name)
+        try container.encode(description, forKey: .description)
+        try container.encode(count, forKey: .count)
+    }
+
 }

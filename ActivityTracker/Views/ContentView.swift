@@ -8,33 +8,35 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var showingAddActivity = false
 
     @ObservedObject var activities = Activities()
+
+    @State private var showAddActivity = false
 
     var body: some View {
         NavigationView {
             List {
-                ForEach(activities.items) { activity in
-                    NavigationLink(destination: ActivityView()) {
+                ForEach(activities.items, id: \.id) { activity in
+                    NavigationLink(destination: ActivityView(activity: activity)) {
                         HStack {
                             Text(activity.name)
+                            Spacer()
                             Text("\(activity.count)")
+                                .foregroundColor(.secondary)
                         }
                     }
                 }
                 .onDelete(perform: removeItems)
             }
-
-            Button(action: {
-                self.showingAddActivity = true
-            }) {
-                Text("Add activity")
-            }
-
-            .navigationBarTitle(Text("ActivityTracker"))
-            .sheet(isPresented: $showingAddActivity) {
-                AddActivityView(activities: self.activities)
+            .navigationTitle("ActivityTracker")
+            .navigationBarItems(
+                trailing: Button(action: {
+                    showAddActivity = true
+                }) {
+                    Text("Add activity")
+                })
+            .sheet(isPresented: $showAddActivity) {
+                AddActivityView(activities: activities)
             }
         }
     }

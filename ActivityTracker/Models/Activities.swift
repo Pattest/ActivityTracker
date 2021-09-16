@@ -8,6 +8,7 @@
 import SwiftUI
 
 class Activities: ObservableObject {
+
     @Published var items = [ActivityItem]() {
         didSet {
             let encoder = JSONEncoder()

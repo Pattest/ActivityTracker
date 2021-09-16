@@ -13,6 +13,7 @@ struct AddActivityView: View {
 
     @ObservedObject var activities: Activities
 
+    @State private var showAlert = false
     @State private var name = ""
     @State private var description = ""
 
@@ -28,10 +29,18 @@ struct AddActivityView: View {
                     saveItem()
                 }
             )
+            .alert(isPresented: $showAlert) {
+                Alert(title: Text("Name and description are required"))
+            }
         }
     }
 
     func saveItem() {
+        if name.isEmpty || description.isEmpty {
+            self.showAlert = true
+            return
+        }
+
         let activity = ActivityItem(name: name,
                                     description: description)
         activities.items.append(activity)
