@@ -7,8 +7,7 @@
 
 import SwiftUI
 
-class ActivityItem: ObservableObject, Codable {
-    var id = UUID()
+class ActivityItem: ObservableObject, Identifiable, Codable {
     var name: String
     var description: String
     @Published var count: Int = 0

@@ -11,11 +11,7 @@ class Activities: ObservableObject {
 
     @Published var items = [ActivityItem]() {
         didSet {
-            let encoder = JSONEncoder()
-            
-            if let encoded = try? encoder.encode(items) {
-                UserDefaults.standard.setValue(encoded, forKey: "Items")
-            }
+            saveItems()
         }
     }
 
@@ -29,5 +25,13 @@ class Activities: ObservableObject {
         }
 
         self.items = []
+    }
+
+    func saveItems() {
+        let encoder = JSONEncoder()
+        
+        if let encoded = try? encoder.encode(items) {
+            UserDefaults.standard.setValue(encoded, forKey: "Items")
+        }
     }
 }

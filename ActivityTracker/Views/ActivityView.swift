@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ActivityView: View {
 
+    var activities: Activities
     @ObservedObject var activity: ActivityItem
 
     var body: some View {
@@ -20,6 +21,9 @@ struct ActivityView: View {
                     value: $activity.count)
             Spacer()
         }
+        .onDisappear(perform: {
+            activities.saveItems()
+        })
         .navigationBarTitle(Text(activity.name))
         .padding()
     }
@@ -29,6 +33,7 @@ struct ActivityView_Previews: PreviewProvider {
     static var previews: some View {
         let activity = ActivityItem(name: "Name",
                                     description: "Description")
-        ActivityView(activity: activity)
+        ActivityView(activities: Activities(),
+                     activity: activity)
     }
 }

@@ -16,12 +16,12 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             List {
-                ForEach(activities.items, id: \.id) { activity in
-                    NavigationLink(destination: ActivityView(activity: activity)) {
-                        HStack {
+                ForEach(activities.items) { activity in
+                    NavigationLink(destination: ActivityView(activities: activities,
+                                                             activity: activity)) {
+                        VStack {
                             Text(activity.name)
-                            Spacer()
-                            Text("\(activity.count)")
+                            Text(activity.description)
                                 .foregroundColor(.secondary)
                         }
                     }
