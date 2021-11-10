@@ -4,7 +4,7 @@
 
 ### Description
 
-Challenge project of [100 Days of SwiftUI](https://www.hackingwithswift.com/100/swiftui)
+Third challenge project of [100 Days of SwiftUI](https://www.hackingwithswift.com/100/swiftui)
 
 This project is a tracker app that show a list of your activities and how many times you have completed each one.
 
